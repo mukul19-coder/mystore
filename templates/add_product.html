@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Add Product</title>
+	<style type="text/css">
+		.bg
+		{
+			background-color: #2B3A42;
+			color: #3F5765;
+		}
+
+		.pill-nav
+		{
+			background-color: #1395cf;
+			border-radius: 0px 10px;
+		}
+
+		.pill-nav a
+		{
+			display: inline-block;
+			color: #BDD4DE;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button
+		{
+			display: inline-block;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button:hover
+		{
+			background-color: #BDD4DE;
+			color: rgb(63, 87, 101);
+			font-weight: bold;
+		}
+
+		.pill-nav a:hover
+		{
+		  	background-color: #BDD4DE;
+			color: #3F5765;
+			font-weight: bold;
+		}
+
+		.t1
+		{
+			background-image: linear-gradient(to bottom right, #E7E7E7, #9B9B9B);
+			border-radius: 10px;
+			width: 60%;
+			margin-top: 3%;
+			text-align: center;
+		}
+
+		.t1 input
+		{
+			height: 20px;
+		}
+
+		.t1 a
+		{
+			color: #3F5765;
+		}
+
+		.img
+		{
+			width: 50%;
+			height: auto;
+		}
+
+		.dropdown .dropbtn 
+		{
+		  	font-size: 16px;  
+		  	border: none;
+		  	outline: none;
+		  	color: white;
+		  	padding: 14px 16px;
+		  	background-color: inherit;
+		  	font-family: inherit;
+		  	margin: 0;
+		}
+
+
+		.dropdown-content 
+		{
+			display: none;
+		  	position: absolute;
+		  	margin-left: 500px;
+		  	background-color: #3F5765;
+		  	min-width: 160px;
+		  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  	z-index: 1;
+		}
+
+		.dropdown-content a 
+		{
+		  	float: none;
+		  	color: #EFEFEF;
+		  	padding: 12px 16px;
+		  	text-decoration: none;
+		  	display: block;
+		  	text-align: left;
+		}
+
+		.dropdown-content a:hover 
+		{
+		  	background-color: #ddd;
+		}
+
+		.dropdown:hover .dropdown-content 
+		{
+		  	display: block;
+		}
+	</style>
+</head>
+<body class="bg">
+	<div class="pill-nav">
+	  	<a href="{% url 'home' %}">Home <i class="fa fa-home" aria-hidden="true"></i></a>
+	  	<a href="{% url 'shop' %}">Shop <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+		<a href="{% url 'contact' %}">Contact <i class="fa fa-phone" aria-hidden="true"></i></a>
+	  	{% if request.user.is_authenticated %}
+	  		<a href="{% url 'profile' %}">Profile <i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+	  		<a href="{% url 'cart' %}">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+	  		{% if request.user.is_superuser %}
+	  			<span class="dropdown">
+		  			<button class="dropbtn" class="b1">Admin Panel <i class="fa fa-caret-down" style="color: #BDD4DE;"></i></button>
+		  			<div class="dropdown-content">
+				      	<a href="{% url 'add' %}">Add Products</a>
+				      	<a href="{% url 'orders' %}">Orders</a>
+				    </div>
+				</span>
+	  		{% endif %}
+	  		<a href="{% url 'history' %}">History <i class="fa fa-history" aria-hidden="true"></i></a>
+	  		<a href="{% url 'signout' %}">Sign Out <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+	  	{% else %}
+	  		<a href="{% url 'registration' %}">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+	  		<a href="{% url 'login' %}">Sign In <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+	  	{% endif %}
+	</div>
+
+	<form method="POST" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+		<table class="t1" cellspacing="10px" align="center">
+			<tr>
+				<th colspan="2">
+					<img src="{% static '001.png' %}" class="img">
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2" style="font-size: 20px;">
+					ADD PRODUCT
+				</th>
+			</tr>
+			<tr></tr>
+			<tr>
+				<th width="50%">IMAGE:</th>
+				<td>
+					{{ form.img1 }}
+				</td>
+			</tr>
+			<tr>
+				<th>NAME:</th>
+				<td>
+					{{ form.name }}
+				</td>
+			</tr>
+			<tr>
+				<th>DESCRIPTION:</th>
+				<td>
+					{{ form.desc }}
+				</td>
+			</tr>
+			<tr>
+				<th>PRICE:</th>
+				<td>
+					{{ form.price }}
+				</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<th colspan="2" style="text-align: center;">
+					<input type="submit" value="ADD" style="background-color: transparent; border: none; font-size: 15px; color: #3F5765; font-weight: bold;">
+				</th>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

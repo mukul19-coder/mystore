@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Sign In</title>
+	<style type="text/css">
+		.bg
+		{
+			background-color: #2B3A42;
+			color: #3F5765;
+		}
+
+		.pill-nav
+		{
+			background-color: #1395cf;
+			border-radius: 0px 10px;
+		}
+
+		.pill-nav a
+		{
+			display: inline-block;
+			color: #BDD4DE;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button
+		{
+			display: inline-block;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button:hover
+		{
+			background-color: #BDD4DE;
+			color: rgb(63, 87, 101);
+			font-weight: bold;
+		}
+
+		.pill-nav a:hover
+		{
+		  	background-color: #BDD4DE;
+			color: #3F5765;
+			font-weight: bold;
+		}
+
+		.t1
+		{
+			background-image: linear-gradient(to bottom right, #E7E7E7, #9B9B9B);
+			border-radius: 10px;
+			width: 50%;
+			margin-top: 3%;
+			text-align: center;
+		}
+
+		.t1 input
+		{
+			height: 20px;
+		}
+
+		.t1 a
+		{
+			color: #3F5765;
+		}
+
+		.img
+		{
+			width: 50%;
+			height: auto;
+		}
+	</style>
+
+	<script type="text/javascript">
+		function myFunction() 
+		{
+		  	var x = document.getElementById("myInput");
+		  	if (x.type == "password") 
+		  	{
+		    	x.type = "text";
+		  	} 
+		  	else 
+		  	{
+		    	x.type = "password";
+		  	}
+		}
+	</script>
+</head>
+<body class="bg">
+	<div class="pill-nav">
+	  	<a href="{% url 'home' %}">Home <i class="fa fa-home" aria-hidden="true"></i></a>
+	  	<a href="{% url 'shop' %}">Shop <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+		<a href="{% url 'contact' %}">Contact <i class="fa fa-phone" aria-hidden="true"></i></a>
+	  	<a href="{% url 'registration' %}">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+	  	<a href="{% url 'login' %}">Sign In <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+	</div>
+
+	<form method="POST" action="{% url 'login' %}">
+		{% csrf_token %}
+		<table class="t1" cellspacing="30px" align="center">
+			<tr>
+				<th colspan="2">
+					<img src="{% static '001.png' %}" class="img">
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2" style="font-size: 20px;">
+					Login
+				</th>
+			</tr>
+			<tr>
+				<th width="50%">USERNAME:</th>
+				<td>
+					<input type="text" name="username">
+				</td>
+			</tr>
+			<tr>
+				<th>PASSWORD:</th>
+				<td>
+					<input type="password" id="myInput" name="password">
+					<br>
+					<input type="checkbox" onclick="myFunction()">Show Password
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2" style="text-align: center;">
+					<input type="submit" value="Log In" style="background-color: transparent; border: none; font-size: 15px; color: #3F5765; font-weight: bold;">
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2" style="text-align: center;">
+					New User? <a href="{% url 'registration' %}">Sign Up!</a>
+				</th>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

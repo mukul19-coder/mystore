@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Profile</title>
+	<style type="text/css">
+		.bg
+		{
+			background-color: #2B3A42;
+			color: #3F5765;
+		}
+
+		.pill-nav
+		{
+			background-color: #1395cf;
+			border-radius: 0px 10px;
+		}
+
+		.pill-nav a
+		{
+			display: inline-block;
+			color: #BDD4DE;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button
+		{
+			display: inline-block;
+		  	text-align: center;
+		  	padding: 14px;
+		  	text-decoration: none;
+		  	font-size: 17px;
+		  	border-radius: 5px;
+		}
+
+		.pill-nav button:hover
+		{
+			background-color: #BDD4DE;
+			color: rgb(63, 87, 101);
+			font-weight: bold;
+		}
+
+		.pill-nav a:hover
+		{
+		  	background-color: #BDD4DE;
+			color: #3F5765;
+			font-weight: bold;
+		}
+
+		.t1
+		{
+			background-image: linear-gradient(to bottom right, #E7E7E7, #9B9B9B);
+			border-radius: 10px;
+			width: 50%;
+			margin-top: 3%;
+			text-align: center;
+		}
+
+		.t1 input
+		{
+			height: 20px;
+		}
+
+		.t1 a
+		{
+			color: #3F5765;
+		}
+
+		.img
+		{
+			width: 70%;
+			height: auto;
+		}
+
+		.b1 .b1:active .b1:hover
+		{
+			color: #EFEFEF;
+			font-weight: bold;
+			border: none;
+			height: 30px;
+			width: 170px;
+		}
+
+		.b2
+		{
+			background-color: transparent;
+			border: none;
+			color: #3F5765;
+			font-size: 17px;
+		}
+
+		#pass
+		{
+			display: none;
+		}
+	</style>
+
+
+</head>
+<body class="bg">
+	<div class="pill-nav">
+	  	<a href="{% url 'home' %}">Home <i class="fa fa-home" aria-hidden="true"></i></a>
+	  	<a href="{% url 'shop' %}">Shop <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+		<a href="{% url 'contact' %}">Contact <i class="fa fa-phone" aria-hidden="true"></i></a>
+	  	{% if request.user.is_authenticated %}
+	  		<a href="{% url 'profile' %}">Profile <i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+	  		<a href="{% url 'cart' %}">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+	  		{% if request.user.is_superuser %}
+	  			<span class="dropdown">
+		  			<button class="dropbtn" class="b1">Admin Panel <i class="fa fa-caret-down" style="color: #BDD4DE;"></i></button>
+		  			<div class="dropdown-content">
+				      	<a href="{% url 'add' %}">Add Products</a>
+				      	<a href="{% url 'orders' %}">Orders</a>
+				    </div>
+				</span>
+	  		{% endif %}
+	  		<a href="{% url 'history' %}">History <i class="fa fa-history" aria-hidden="true"></i></a>
+	  		<a href="{% url 'signout' %}">Sign Out <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+	  	{% else %}
+	  		<a href="{% url 'registration' %}">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+	  		<a href="{% url 'login' %}">Sign In <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+	  	{% endif %}
+	</div>
+
+		<table class="t1" cellspacing="30px" align="center">
+			<tr>
+				<th colspan="3">
+					<img src="{% static '002.png' %}" class="img">
+				</th>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chusername' %}" id="uname">
+					{% csrf_token %}
+					<th width="50%">USERNAME:</th>
+					<td>
+						<input type="text" name="username" value="{{ request.user.username }}">
+					</td>
+					<td>
+						<button type="submit" form="uname" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chemail' %}" id="email">
+					{% csrf_token %}
+					<th>EMAIL:</th>
+					<td>
+						<input type="text" name="email" value="{{ request.user.email }}">
+					</td>
+					<td>
+						<button type="submit" form="email" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chfirstname' %}" id="fname">
+					{% csrf_token %}
+					<th>First Name:</th>
+					<td>
+						<input type="text" name="firstname" value="{{ request.user.first_name }}">
+					</td>
+					<td>
+						<button type="submit" form="fname" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chlastname' %}" id="lname">
+					{% csrf_token %}
+					<th>Last Name:</th>
+					<td>
+						<input type="text" name="lastname" value="{{ request.user.last_name }}">
+					</td>
+					<td>
+						<button type="submit" form="lname" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chaddress' %}" id="address">
+					{% csrf_token %}
+					<th>Address:</th>
+					<td>
+						<input type="text" name="addrss" value="{{ p.address }}">
+					</td>
+					<td>
+						<button type="submit" form="oname" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" action="{% url 'chphonenumber' %}" id="pnumber">
+					{% csrf_token %}
+					<th>Phone Number:</th>
+					<td>
+						<input type="text" name="phonenumber" value="{{ p.phone_number }}">
+					</td>
+					<td>
+						<button type="submit" form="pnumber" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form method="POST" id="oname" action="{% url 'chorganizationname' %}">
+					{% csrf_token %}
+					<th>Organization Name:</th>
+					<td>
+						<input type="text" name="organizationname" value="{{ p.organization_name }}">
+					</td>
+					<td>
+						<button type="submit" form="oname" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+
+			<tr>
+				<form method="POST" action="{% url 'chgst' %}" id="gst">
+					{% csrf_token %}
+					<th>GST:</th>
+					<td>
+						<input type="text" name="gst" value="{{ p.gst }}">
+					</td>
+					<td>
+						<button type="submit" form="gst" class="b2">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>
+					</td>
+				</form>
+			</tr>
+
+		</table>
+</body>
+</html>
